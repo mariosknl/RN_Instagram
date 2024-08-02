@@ -90,21 +90,23 @@ export default function ProfileScreen() {
 			</Text>
 
 			{/* Form  */}
-			<CustomTextInput
-				placeholder="Username"
-				label="Username"
-				value={username}
-				onChangeText={setUsername}
-			/>
+			<View className="gap-5">
+				<CustomTextInput
+					placeholder="Username"
+					label="Username"
+					value={username}
+					onChangeText={setUsername}
+				/>
 
-			<CustomTextInput
-				placeholder="Bio"
-				label="Bio"
-				value={bio}
-				onChangeText={setBio}
-				multiline
-				numberOfLines={3}
-			/>
+				<CustomTextInput
+					placeholder="Bio"
+					label="Bio"
+					value={bio}
+					onChangeText={setBio}
+					multiline
+					numberOfLines={3}
+				/>
+			</View>
 
 			{/* Buttons */}
 			<View className="mt-auto gap-2">
