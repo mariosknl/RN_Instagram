@@ -1,5 +1,5 @@
 import { Text } from "react-native";
 
-export default function New() {
-	return <Text>Feed</Text>;
+export default function CreatePost() {
+	return <Text>CreatePost</Text>;
 }
