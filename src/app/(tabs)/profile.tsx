@@ -5,9 +5,13 @@ import Button from "~/src/components/Button";
 import { supabase } from "~/src/lib/supabase";
 import { useAuth } from "~/src/providers/AuthProvider";
 import CustomTextInput from "~/src/components/CustomTextInput";
+import { cld, uploadImage } from "~/src/lib/cloudinary";
+import { thumbnail } from "@cloudinary/url-gen/actions/resize";
+import { AdvancedImage } from "cloudinary-react-native";
 
 export default function ProfileScreen() {
 	const [image, setImage] = useState<string | null>(null);
+	const [remoteImage, setRemoteImage] = useState<string | null>(null);
 	const [username, setUsername] = useState("");
 	const [bio, setBio] = useState("");
 
@@ -33,6 +37,8 @@ export default function ProfileScreen() {
 		}
 
 		setUsername(data.username);
+		setBio(data.bio);
+		setRemoteImage(data.avatar_url);
 	};
 
 	const updateProfile = async () => {
@@ -40,12 +46,21 @@ export default function ProfileScreen() {
 			return;
 		}
 
+		const updatedProfile = {
+			id: user.id,
+			username,
+			bio,
+		};
+
+		if (image) {
+			const response = await uploadImage(image);
+
+			updatedProfile.avatar_url = response?.public_id;
+		}
+
 		const { data, error } = await supabase
 			.from("profiles")
-			.update({
-				id: user.id,
-				username,
-			})
+			.update(updatedProfile)
 			.eq("id", user.id)
 			.select("*");
 
@@ -71,12 +86,23 @@ export default function ProfileScreen() {
 		}
 	};
 
+	let remoteCldImage;
+	if (remoteImage) {
+		remoteCldImage = cld.image(remoteImage);
+		remoteCldImage.resize(thumbnail().width(300).height(300));
+	}
+
 	return (
 		<View className="p-3 flex-1">
 			{/* Avatar Image Picker */}
 			{image ? (
 				<Image
 					source={{ uri: image }}
+					className="w-52 aspect-square self-center rounded-full"
+				/>
+			) : remoteCldImage ? (
+				<AdvancedImage
+					cldImg={remoteCldImage}
 					className="w-52 aspect-square self-center rounded-full"
 				/>
 			) : (
