@@ -12,8 +12,6 @@ export default function CreatePost() {
 	const [image, setImage] = useState<string | null>(null);
 	const { session } = useAuth();
 
-	console.log("session", session);
-
 	useEffect(() => {
 		if (!image) {
 			pickImage();
@@ -39,9 +37,8 @@ export default function CreatePost() {
 			return;
 		}
 		const response = await uploadImage(image);
-		// save the post in db
-		console.log("response", response?.public_id);
 
+		// save the post in db
 		const { data, error } = await supabase
 			.from("posts")
 			.insert([
