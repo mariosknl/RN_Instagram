@@ -12,6 +12,7 @@ export const uploadImage = async (file: string) => {
 	const options: UploadApiOptions = {
 		upload_preset: "Default",
 		unsigned: true,
+		resource_type: "auto",
 	};
 
 	return new Promise<UploadApiResponse>(async (resolve, reject) => {

@@ -50,6 +50,7 @@ export default function ProfileScreen() {
 			id: user.id,
 			username,
 			bio,
+			avatar_url: "",
 		};
 
 		if (image) {

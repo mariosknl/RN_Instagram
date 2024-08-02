@@ -1,13 +1,14 @@
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { Text, useWindowDimensions, View } from "react-native";
 
-import { AdvancedImage } from "cloudinary-react-native";
+import { AdvancedImage, AdvancedVideo } from "cloudinary-react-native";
 
 // Import required actions and qualifiers.
 import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { cld } from "~/src/lib/cloudinary";
+import PostContent from "./PostContent";
 
 export default function PostListItem({ post }) {
 	const { width } = useWindowDimensions();
@@ -20,6 +21,7 @@ export default function PostListItem({ post }) {
 		thumbnail().width(48).height(48).gravity(focusOn(FocusOn.face()))
 	);
 
+	const video = cld.video(post.image);
 	return (
 		<View className="bg-white">
 			{/* Header */}
@@ -34,7 +36,7 @@ export default function PostListItem({ post }) {
 			</View>
 
 			{/* Content */}
-			<AdvancedImage cldImg={image} className="w-full aspect-[4/3]" />
+			<PostContent post={post} />
 
 			{/* Icons */}
 			<View className="flex-row gap-3 p-3">
