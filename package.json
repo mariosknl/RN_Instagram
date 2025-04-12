@@ -21,7 +21,7 @@
     "nativewind": "^4.0.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-native": "0.78.0",
+    "react-native": "0.79.0",
     "react-native-reanimated": "~3.17.0",
     "react-native-safe-area-context": "4.14.1",
     "react-native-screens": "4.9.2",
